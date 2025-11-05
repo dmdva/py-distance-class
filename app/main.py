@@ -34,15 +34,12 @@ class Distance:
             return NotImplemented
         return Distance(km=self.km * other)
 
-    def __truediv__(self, other: Distance | int | float) -> Distance | None:
-        if isinstance(other, (int, float)):
-            if other == 0:
-                raise ZeroDivisionError("Division by zero")
-            return Distance(km=round(self.km / other, 2))
-        elif isinstance(other, Distance):
-            return None
-        else:
+    def __truediv__(self, other: int | float) -> Distance:
+        if not isinstance(other, (int, float)):
             return NotImplemented
+        if other == 0:
+            raise ZeroDivisionError("Division by zero")
+        return Distance(km=round(self.km / other, 2))
 
     def __lt__(self, other: Distance | int | float) -> bool:
         if isinstance(other, Distance):
